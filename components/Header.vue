@@ -1,5 +1,5 @@
 <template>
-    <header :height="headerHeight" ref="header">
+    <header ref="header">
         <v-container>
             <div class="content">
                 <div class="logo">

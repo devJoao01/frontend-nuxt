@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '~/services/api';
 
 export default {
   data() {
@@ -31,16 +31,15 @@ export default {
     };
   },
   methods: {
-    changeLanguage(lang) {
-      axios.get(`http://localhost/wordpress/wp-json/myportfolio/v1/informations?lang=${lang}`)
-        .then(response => {
-          this.fields = response.data;
-          this.selectedLanguage = lang;
-          localStorage.setItem('selectedLanguage', lang);
-        })
-        .catch(error => {
-          console.error('Erro ao obter dados:', error);
-        });
+    async changeLanguage(lang) {
+      try {
+        const response = await api.fetchInformations(lang);
+        this.fields = response;
+        this.selectedLanguage = lang;
+        localStorage.setItem('selectedLanguage', lang);
+      } catch (error) {
+        console.error('Erro ao obter dados:', error);
+      }
     }
   },
   mounted() {
